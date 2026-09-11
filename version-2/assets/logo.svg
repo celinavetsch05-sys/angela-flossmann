@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Haus & Ferienwohnungsverwaltung Angela Flossmann">
+  <title>Angela Flossmann — Haus &amp; Ferienwohnungsverwaltung</title>
+  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Haus mit Satteldach -->
+    <path d="M12 30 L32 13 L52 30" />
+    <path d="M17 27 V50 H47 V27" />
+    <!-- Tür -->
+    <path d="M28 50 V38 H36 V50" />
+    <!-- Schlüssel, dezent rechts -->
+    <circle cx="41" cy="33" r="3.4" />
+    <path d="M41 36.4 V43 M41 41 h3 M41 43 h2.4" />
+  </g>
+  <!-- Monogramm-Grundlinie -->
+  <path d="M14 56 h36" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.5" />
+</svg>
