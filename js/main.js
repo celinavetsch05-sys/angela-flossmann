@@ -83,7 +83,7 @@
     }
   }
 
-  /* ---- Kontaktformular: nur Hinweis, kein echter Versand ---- */
+  /* ---- Kontaktformular: echter Versand über /api/contact (Resend) ---- */
   var form = document.getElementById("contactForm");
   var note = document.getElementById("formNote");
   if (form && note) {
@@ -93,13 +93,50 @@
         form.reportValidity();
         return;
       }
-      note.hidden = false;
-      note.textContent =
-        "Danke für Ihre Nachricht. Der Formularversand wird derzeit noch " +
-        "eingerichtet; bitte kontaktieren Sie mich in der Zwischenzeit gerne " +
-        "telefonisch oder per E-Mail.";
-      form.reset();
-      note.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      var submitBtn = form.querySelector("button[type=submit]");
+      var payload = {
+        name: form.elements["name"].value,
+        email: form.elements["email"].value,
+        phone: form.elements["phone"].value,
+        message: form.elements["message"].value,
+        website: form.elements["website"] ? form.elements["website"].value : "",
+      };
+
+      if (submitBtn) submitBtn.disabled = true;
+      note.hidden = true;
+      note.classList.remove("form-note--error");
+
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (response) {
+          return response.json().then(function (data) {
+            return { ok: response.ok, data: data };
+          });
+        })
+        .then(function (result) {
+          if (!result.ok) {
+            throw new Error((result.data && result.data.error) || "Fehler beim Senden.");
+          }
+          note.textContent =
+            "Danke für Ihre Nachricht! Ich melde mich zeitnah bei Ihnen zurück.";
+          note.hidden = false;
+          form.reset();
+        })
+        .catch(function () {
+          note.textContent =
+            "Da ist leider etwas schiefgelaufen. Bitte kontaktieren Sie mich in der " +
+            "Zwischenzeit telefonisch oder per E-Mail.";
+          note.classList.add("form-note--error");
+          note.hidden = false;
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+          note.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
     });
   }
 })();

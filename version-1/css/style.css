@@ -294,6 +294,8 @@ a { color: var(--brass-dark); }
   padding: .7rem .9rem; border-radius: 8px; font-size: .9rem; margin: 0 0 1rem;
 }
 .form-note[hidden] { display: none; }
+.form-note--error { background: #fbe9e7; border-color: #e3a29a; color: #7a2d22; }
+.field--hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; margin: 0; }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--navy-dark); color: #c6d0d6; font-size: .92rem; }
